@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Spikes
   - Trampoline
+  - PlusHealth
+  - PlusPaper
+  - PossibilityPoint
+  - PosZone
   layers:
   - Default
   - TransparentFX
@@ -13,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PosZone
   - 
   - 
   - 

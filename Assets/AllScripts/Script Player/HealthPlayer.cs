@@ -5,16 +5,14 @@ using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour
 {
-    private float health;
+    public float health;
     private float maxHealth = 3;
-    public GameObject healthValue;
     public Image[] healths = new Image[3];
 
     private void Start()
     {
-        health = 3;
+        HealthScore(health);
     }
-
 
     public void TakeHit()
     {
