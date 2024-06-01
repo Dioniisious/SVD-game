@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float speed, verticJump, horizJump;
+    public Camera cam;
+    private Rigidbody2D _rb;
+
+    private void Awake()
     {
-        
+        _rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y));
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Trampoline")
+        {
+            Debug.Log("Trampoline");
+            _rb.AddForce(new Vector2(horizJump * 1000, verticJump * 1000) * Time.fixedDeltaTime);
+        }
     }
 }
