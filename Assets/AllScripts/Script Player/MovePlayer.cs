@@ -8,7 +8,7 @@ public class MovePlayer : MonoBehaviour
     public float speed, verticTramplineJump, horizTramplineJump, damageHJump, damageVJump;
     public float secondInvicible;
     public float miniHorizontalJump, miniVerticalJump;
-    private bool invicible = false;
+    private bool invicible = false, freeze = false;
     public Camera cam;
     private Rigidbody2D _rb;
 
@@ -19,7 +19,8 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y));
+        if (freeze == false)
+            _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,7 +32,7 @@ public class MovePlayer : MonoBehaviour
         }
 
         if (invicible == false)
-            if (collision.gameObject.tag == "Spikes" || collision.gameObject.tag == "Lava")
+            if (collision.gameObject.tag == "Spikes" || collision.gameObject.tag == "Lava" || collision.gameObject.tag == "Grabli")
             {
                 Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
@@ -48,6 +49,25 @@ public class MovePlayer : MonoBehaviour
             Debug.Log("TrampolineZone");
             _rb.AddForce(new Vector2(miniHorizontalJump * 1000, miniVerticalJump * 1000) * Time.fixedDeltaTime);
         }
+
+        if (invicible == false)
+            if (collision.gameObject.tag == "Grabli" || collision.gameObject.tag == "Capcan")
+            {
+                Debug.Log(collision.gameObject.tag);
+                HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
+                health.TakeHit();
+                freeze = true;
+                _rb.velocity = transform.TransformDirection(new Vector2(0, _rb.velocity.y));
+                StartCoroutine(FreezeDamage(collision.gameObject.GetComponent<Freeze>().secondFreeze));
+                StartCoroutine(Invicible(secondInvicible));
+            }
+    }
+
+    private IEnumerator FreezeDamage(float second)
+    {
+        yield return new WaitForSeconds(second);
+        freeze = false;
+
     }
 
     private IEnumerator Invicible(float second)
