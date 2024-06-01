@@ -8,8 +8,9 @@ TagManager:
   - Trampoline
   - PlusHealth
   - PlusPaper
-  - PossibilityPoint
   - PosZone
+  - ZoneToJump
+  - Lava
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Water
   - UI
   - PosZone
-  - 
+  - Point
   - 
   - 
   - 
