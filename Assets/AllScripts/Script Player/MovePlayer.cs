@@ -34,32 +34,32 @@ public class MovePlayer : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
-                Debug.Log("Hammer");
+                Debug.Log("Взял Кувалду");
                 toolInArm = "Hammer";
             }
             if (Input.GetKey(KeyCode.Alpha2))
             {
-                Debug.Log("Key");
+                Debug.Log("Взял ключ");
                 toolInArm = "Key";
             }
             if (Input.GetKey(KeyCode.Alpha3))
             {
-                Debug.Log("Schield");
+                Debug.Log("Взял щит");
                 toolInArm = "Schield";
             }
             if (Input.GetKey(KeyCode.Alpha4))
             {
-                Debug.Log("Sword");
+                Debug.Log("Взял меч");
                 toolInArm = "Sword";
             }
             if (Input.GetKey(KeyCode.Alpha5))
             {
-                Debug.Log("Hearth");
+                Debug.Log("Взял сердце");
                 toolInArm = "Hearth";
             }
             if (Input.GetKey(KeyCode.Alpha6))
             {
-                Debug.Log("Bridge");
+                Debug.Log("Призвал мост");
                 toolInArm = "Bridge";
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
 
@@ -69,7 +69,7 @@ public class MovePlayer : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Alpha7))
             {
-                Debug.Log("TRAMPLINE IS GO");
+                Debug.Log("Призвал Батут");
                 toolInArm = "Trampline";
                 spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
                 Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);

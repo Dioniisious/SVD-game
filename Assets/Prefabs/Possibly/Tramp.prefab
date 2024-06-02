@@ -32,7 +32,8 @@ Transform:
   m_LocalPosition: {x: -1.0286028, y: 0.5169308, z: 0}
   m_LocalScale: {x: 0.42158517, y: 0.42158517, z: 0.42158517}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 4028883540232592500}
   m_Father: {fileID: 4120188352149934987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &89184536561852907
@@ -200,11 +201,11 @@ Transform:
   m_GameObject: {fileID: 4475559840880598625}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.73, y: 0.19, z: 0}
-  m_LocalScale: {x: 3.09, y: 0.4765272, z: 1}
+  m_LocalPosition: {x: -1.6637139, y: -0.7754798, z: 0}
+  m_LocalScale: {x: 7.329479, y: 1.1303225, z: 2.3719997}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4120188352149934987}
+  m_Father: {fileID: 8368841442737133815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4446603471152071053
 SpriteRenderer:
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64e28122999e2e42a53a44a9743798a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectToJump: {fileID: 8368841442737133815}
+  ObjectToJump: {fileID: 0}
   XDistance: -0.58
   YDistance: -0.32
 --- !u!1 &7032430563480911012
@@ -329,7 +330,7 @@ GameObject:
   - component: {fileID: 4120188352149934987}
   m_Layer: 0
   m_Name: Tramp
-  m_TagString: Untagged
+  m_TagString: Trampoline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -348,6 +349,5 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8368841442737133815}
-  - {fileID: 4028883540232592500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
