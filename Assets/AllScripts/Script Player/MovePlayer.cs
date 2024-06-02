@@ -24,6 +24,39 @@ public class MovePlayer : MonoBehaviour
     {
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
+
+        // Чекаем, на что нажали
+        if (isChoseTool == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Debug.Log("Hammer");
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Debug.Log("Key");
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Debug.Log("Schield");
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                Debug.Log("Sword");
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                Debug.Log("Hearth");
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                Debug.Log("Bridge");
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                Debug.Log("Trampline");
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -90,37 +123,6 @@ public class MovePlayer : MonoBehaviour
         {
             isChoseTool = true;
             Debug.Log("Player entered the zone!" + isChoseTool);
-
-            // Чекаем, на что нажали
-            if (Input.GetKeyUp(KeyCode.Alpha1))
-            {
-                Debug.Log("Hammer");
-            }
-            if (Input.GetKeyUp(KeyCode.Alpha2))
-            {
-                Debug.Log("Key");
-            }
-            if (Input.GetKeyUp(KeyCode.Alpha3))
-            {
-                Debug.Log("Schield");
-            }
-            if (Input.GetKeyUp(KeyCode.Alpha4))
-            {
-                Debug.Log("Sword");
-            }
-            if (Input.GetKeyUp(KeyCode.Alpha5))
-            {
-                Debug.Log("Hearth");
-            }
-            if (Input.GetKeyUp(KeyCode.Alpha6))
-            {
-                Debug.Log("Bridge");
-            }
-            if (Input.GetKeyUp(KeyCode.Alpha7))
-            {
-                Debug.Log("Trampline");
-            }
-
         }
 
 
