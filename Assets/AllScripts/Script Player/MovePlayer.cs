@@ -10,26 +10,78 @@ public class MovePlayer : MonoBehaviour
     public float miniHorizontalJump, miniVerticalJump;
     private bool invicible = false, freeze = false;
     public Camera cam;
+    public Transform spawnPosition;
     private Rigidbody2D _rb;
     public bool isChoseTool = false;
     public string toolInArm;
+    public GameObject ZoneObject;
+    public GameObject swordReal, sheildReal, hammerReal, keyReal, bridgeReal, tramplineReal, heartReal;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        toolInArm = null;
     }
 
     private void FixedUpdate()
     {
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
+
+
+        // Чекаем, на что нажали
+        if (isChoseTool == true)
+        {
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                Debug.Log("Hammer");
+                toolInArm = "Hammer";
+            }
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                Debug.Log("Key");
+                toolInArm = "Key";
+            }
+            if (Input.GetKey(KeyCode.Alpha3))
+            {
+                Debug.Log("Schield");
+                toolInArm = "Schield";
+            }
+            if (Input.GetKey(KeyCode.Alpha4))
+            {
+                Debug.Log("Sword");
+                toolInArm = "Sword";
+            }
+            if (Input.GetKey(KeyCode.Alpha5))
+            {
+                Debug.Log("Hearth");
+                toolInArm = "Hearth";
+            }
+            if (Input.GetKey(KeyCode.Alpha6))
+            {
+                Debug.Log("Bridge");
+                toolInArm = "Bridge";
+                spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
+                Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                toolInArm = null;
+                isChoseTool = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha7))
+            {
+                Debug.Log("TRAMPLINE IS GO");
+                toolInArm = "Trampline";
+                spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
+                Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                toolInArm = null;
+                isChoseTool = false;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Trampoline")
         {
-            Debug.Log("Trampoline");
             _rb.AddForce(new Vector2(horizTramplineJump * 1000, verticTramplineJump * 1000) * Time.fixedDeltaTime);
         }
 
@@ -37,7 +89,6 @@ public class MovePlayer : MonoBehaviour
         {
             if (collision.gameObject.tag == "Spikes" || collision.gameObject.tag == "Lava" || collision.gameObject.tag == "Grabli")
             {
-                Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 _rb.AddForce(new Vector2(damageHJump * 1000, damageVJump * 1000) * Time.fixedDeltaTime);
                 health.TakeHit();
@@ -46,14 +97,13 @@ public class MovePlayer : MonoBehaviour
             }
             if (collision.gameObject.tag == "Jaba" || collision.gameObject.tag == "Rat" || collision.gameObject.tag == "Wizard" || collision.gameObject.tag == "Scelet" || collision.gameObject.tag == "Slime")
             {
-                Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 _rb.velocity = transform.TransformDirection(new Vector2(0, _rb.velocity.y));
                 _rb.AddForce(new Vector2(damageHJump * -100, damageVJump * 300) * Time.fixedDeltaTime);
                 health.TakeHit();
                 freeze = true;
                 invicible = true;
-                Physics2D.IgnoreLayerCollision(3,6, true);
+                Physics2D.IgnoreLayerCollision(3, 6, true);
                 StartCoroutine(Invicible(secondInvicible));
                 StartCoroutine(FreezeDamage(0.6f));
             }
@@ -64,7 +114,6 @@ public class MovePlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "ZoneToJump")
         {
-            Debug.Log("TrampolineZone");
             _rb.AddForce(new Vector2(miniHorizontalJump * 1000, miniVerticalJump * 1000) * Time.fixedDeltaTime);
         }
 
@@ -72,7 +121,6 @@ public class MovePlayer : MonoBehaviour
         {
             if (collision.gameObject.tag == "Grabli" || collision.gameObject.tag == "Capcan" || collision.gameObject.tag == "Poop")
             {
-                Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 health.TakeHit();
                 freeze = true;
@@ -84,6 +132,16 @@ public class MovePlayer : MonoBehaviour
             }
 
         }
+
+        if (collision.gameObject.tag == "PosZone" && toolInArm == null)
+        {
+            isChoseTool = true;
+            ZoneObject = collision.gameObject;
+            //spawnPosition = collision.gameObject.transform.GetChild(0).GetComponent<Transform>();
+            Debug.Log("Player entered the zone!" + isChoseTool);
+        }
+
+
     }
 
     private IEnumerator FreezeDamage(float second)
@@ -101,67 +159,21 @@ public class MovePlayer : MonoBehaviour
 
     }
 
-    // Вход в зону выбора оружия
-    private void OnTriggerEnter(Collider contаcted)
-    {
-        if (contаcted.gameObject.tag == "possibilityZone")
-        {
-            Debug.Log("Player entered the zone!");
-            
-            // Чекаем, на что нажали
-            if (Input.GetMouseButtonDown(0))
-            {
-                // Создаем луч, который идет от камеры через позицию клика
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                // Смотрим, в какой игровой объект попал луч
-                // И действуем в зависимости от того, куда кликнули
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.collider.CompareTag("SwordMenu"))
-                    {
-                        // Статус: вооружен мечом
-                    }
-                    if (hit.collider.CompareTag("SheildMenu"))
-                    {
-                        // Статус: вооружен щитом
-                    }
-                    if (hit.collider.CompareTag("HammerMenu"))
-                    {
-                        // Статус: вооружен кувалдой
-                    }
-                    if (hit.collider.CompareTag("KeyManu"))
-                    {
-                        // Статус: вооружен ключом
-                    }
-                    if (hit.collider.CompareTag("BridgeMenu"))
-                    {
-                        Debug.Log("Player clicked on Bridge!");
-                        // События: построится мост
-                    }
-                    if (hit.collider.CompareTag("TramplineMenu"))
-                    {
-                        Debug.Log("Player clicked on Trampline!");
-                        // События: построится батут
-                    }
-                    if (hit.collider.CompareTag("HeartMenu"))
-                    {
-                        Debug.Log("Player clicked on Heart!");
-                        // События: отнимется HP и полетит к жабе
-                    }
-                }
-            }
-        }
-    }
 
     // Выход из зоны выбора оружия
-    private void OnTriggerExit(Collider contаcted)
+    private void OnTriggerExit2D(Collider2D contаcted)
     {
-        if (contаcted.gameObject.tag == "possibilityZone" && !isChoseTool)
+        if (contаcted.gameObject.tag == "PosZone")
         {
+            isChoseTool = false;
             Debug.Log("Player left the zone!");
             // Выбрал орудие или не успел - убираем менюшку
         }
     }
+
+    public void CreateObjectWhen(GameObject gameObject, Transform SpawnPoint)
+    {
+        Instantiate(gameObject, SpawnPoint);
+    }
+
 }

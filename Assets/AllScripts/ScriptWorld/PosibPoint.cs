@@ -5,13 +5,13 @@ using UnityEngine;
 public class PosibPoint : MonoBehaviour
 {
     public GameObject posPointEnable;
+    public Transform SpawnPoint;
     public bool activeBuild = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player");
             posPointEnable.SetActive(true);
             activeBuild = true;
 }
@@ -21,7 +21,6 @@ public class PosibPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player Out");
             Destroy(posPointEnable);
             activeBuild = false;
         }

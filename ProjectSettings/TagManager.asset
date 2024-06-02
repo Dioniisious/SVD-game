@@ -28,6 +28,8 @@ TagManager:
   - TramplineMenu
   - BridgeMenu
   - HeartMenu
+  - SpawnPoint
+  - Bridge
   layers:
   - Default
   - TransparentFX
