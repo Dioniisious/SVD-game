@@ -5,7 +5,7 @@ public partial class PlayerKeyChecker : MonoBehaviour
 {
     private List<KeyCode> _pressedKeys = new();
     private int _equalityCounter = 0;
-    private List<string> _correctAnswers = GenerateRandomNums();
+    public static List<string> correctAnswers;
 
     void Update()
     {
@@ -43,7 +43,7 @@ public partial class PlayerKeyChecker : MonoBehaviour
             {
                 for (int j = i; i < 5; j++)
                 {
-                    if (_pressedKeys[i].ToString() != _correctAnswers[j])
+                    if (_pressedKeys[i].ToString() != correctAnswers[j])
                     {
                         _equalityCounter ++;
                         break;
@@ -51,10 +51,14 @@ public partial class PlayerKeyChecker : MonoBehaviour
                 }
             }
 
-            if (_equalityCounter != 5)
+            if (_equalityCounter == 5)
             {
-                Debug.Log("Комбинацию набрать не удалось, игрок получает урон");
-                // Получаем урон
+                Debug.Log("Комбинацию удалось набрать!");
+                MovePlayer.isLucky = true;
+            } 
+            else
+            {
+                Debug.Log("Комбинацию набрать не удалось, пробуем снова");
             }
         }
     }

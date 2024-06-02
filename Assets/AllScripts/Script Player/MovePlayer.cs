@@ -13,6 +13,9 @@ public class MovePlayer : MonoBehaviour
     public Transform spawnPosition;
     private Rigidbody2D _rb;
     public bool isChoseTool = false;
+    public bool inInteractionArea = false;
+    public bool keyQuestResult = false;
+    public static bool isLucky = false;
     public string toolInArm;
     public GameObject ZoneObject;
     public GameObject swordReal, sheildReal, hammerReal, keyReal, bridgeReal, tramplineReal, heartReal;
@@ -28,51 +31,79 @@ public class MovePlayer : MonoBehaviour
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
-
-        // ������, �� ��� ������
+        // ×åêàåì, íà ÷òî íàæàëè
         if (isChoseTool == true)
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
-                Debug.Log("���� �������");
-                toolInArm = "Hammer";
+                Debug.Log("Hammer");
+                // Ïîïûòêè ââîäà êîìáèíàöèè êëàâèø:
+                keyQuestResult = TryEnterKeyQuest();
+                // Åñëè óäà÷íî íàáðàíà êîìáèíàöèÿ - îðóäèå/ïðåäìåò ïîÿâëÿåòñÿ:
+                if (keyQuestResult)
+                {
+                    toolInArm = "Hammer";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha2))
             {
-                Debug.Log("���� ����");
-                toolInArm = "Key";
+                Debug.Log("Key");
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Key";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha3))
             {
-                Debug.Log("���� ���");
-                toolInArm = "Schield";
+                Debug.Log("Schield");
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Schield";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha4))
             {
-                Debug.Log("���� ���");
-                toolInArm = "Sword";
+                Debug.Log("Sword");
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Sword";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha5))
             {
-                Debug.Log("���� ������");
-                toolInArm = "Hearth";
+                Debug.Log("Hearth");
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Hearth";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha6))
             {
-                Debug.Log("������� ����");
+                Debug.Log("Ïðèçâàë ìîñò");
                 toolInArm = "Bridge";
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
-
-                Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                }
                 toolInArm = null;
                 isChoseTool = false;
             }
             if (Input.GetKey(KeyCode.Alpha7))
             {
-                Debug.Log("������� �����");
+                Debug.Log("Ïðèçâàë Áàòóò");
                 toolInArm = "Trampline";
                 spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
-                Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                }
                 toolInArm = null;
                 isChoseTool = false;
             }
@@ -126,7 +157,7 @@ public class MovePlayer : MonoBehaviour
                 health.TakeHit();
                 freeze = true;
                 _rb.velocity = transform.TransformDirection(new Vector2(0, _rb.velocity.y));
-                Debug.Log("����" + freeze);
+                Debug.Log("Ñòîþ" + freeze);
                 invicible = true;
                 StartCoroutine(FreezeDamage(collision.gameObject.GetComponent<Freeze>().secondFreeze));
                 StartCoroutine(Invicible(secondInvicible));
@@ -137,6 +168,7 @@ public class MovePlayer : MonoBehaviour
         if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
             isChoseTool = true;
+            inInteractionArea = true;
             ZoneObject = collision.gameObject;
             //spawnPosition = collision.gameObject.transform.GetChild(0).GetComponent<Transform>();
             Debug.Log("Player entered the zone!" + isChoseTool);
@@ -160,21 +192,36 @@ public class MovePlayer : MonoBehaviour
 
     }
 
-
-    // ����� �� ���� ������ ������
-    private void OnTriggerExit2D(Collider2D cont�cted)
+    // Âûõîä èç çîíû âûáîðà îðóæèÿ:
+    private void OnTriggerExit2D(Collider2D contàcted)
     {
-        if (cont�cted.gameObject.tag == "PosZone")
+        if (contàcted.gameObject.tag == "PosZone")
         {
             isChoseTool = false;
+            inInteractionArea = false;
             Debug.Log("Player left the zone!");
-            // ������ ������ ��� �� ����� - ������� �������
+            // Âûáðàë îðóäèå èëè íå óñïåë - óáèðàåì ìåíþøêó
         }
     }
 
     public void CreateObjectWhen(GameObject gameObject, Transform SpawnPoint)
     {
         Instantiate(gameObject, SpawnPoint);
+    }
+
+    // Ìåòîä ïðîãîíîâ ïîïûòîê ââåñòè ïðàâèëüíóþ êîìáèíàöèþ êëàâèø:
+    public bool TryEnterKeyQuest()
+    {
+        isLucky = false;
+        
+        // Èäåò ÷åðåäà ïîïûòîê íàáðàòü êîìáèíàöèþ êëàâèø äî òåõ ïîð,
+        // ïîêà íå ïîëó÷èëîñü è ïîêà âíóòðè çîíû âçàèìîäåéñòâèÿ ñ ïðåïÿòñòâèåì
+        while (!isLucky && inInteractionArea)
+        {
+            PlayerKeyChecker.correctAnswers = PlayerKeyChecker.GenerateRandomNums();
+        }
+
+        return isLucky;
     }
 
 }
