@@ -13,6 +13,9 @@ public class MovePlayer : MonoBehaviour
     public Transform spawnPosition;
     private Rigidbody2D _rb;
     public bool isChoseTool = false;
+    public bool inInteractionArea = false;
+    public bool keyQuestResult = false;
+    public static bool isLucky = false;
     public string toolInArm;
     public GameObject ZoneObject;
     public GameObject swordReal, sheildReal, hammerReal, keyReal, bridgeReal, tramplineReal, heartReal;
@@ -35,35 +38,60 @@ public class MovePlayer : MonoBehaviour
             if (Input.GetKey(KeyCode.Alpha1))
             {
                 Debug.Log("Hammer");
-                toolInArm = "Hammer";
+                // Попытки ввода комбинации клавиш:
+                keyQuestResult = TryEnterKeyQuest();
+                // Если удачно набрана комбинация - орудие/предмет появляется:
+                if (keyQuestResult)
+                {
+                    toolInArm = "Hammer";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha2))
             {
                 Debug.Log("Key");
-                toolInArm = "Key";
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Key";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha3))
             {
                 Debug.Log("Schield");
-                toolInArm = "Schield";
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Schield";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha4))
             {
                 Debug.Log("Sword");
-                toolInArm = "Sword";
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Sword";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha5))
             {
                 Debug.Log("Hearth");
-                toolInArm = "Hearth";
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    toolInArm = "Hearth";
+                }
             }
             if (Input.GetKey(KeyCode.Alpha6))
             {
                 Debug.Log("Bridge");
                 toolInArm = "Bridge";
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
-
-                Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                }
                 toolInArm = null;
                 isChoseTool = false;
             }
@@ -72,7 +100,11 @@ public class MovePlayer : MonoBehaviour
                 Debug.Log("TRAMPLINE IS GO");
                 toolInArm = "Trampline";
                 spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
-                Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                keyQuestResult = TryEnterKeyQuest();
+                if (keyQuestResult)
+                {
+                    Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                }
                 toolInArm = null;
                 isChoseTool = false;
             }
@@ -137,6 +169,7 @@ public class MovePlayer : MonoBehaviour
         if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
             isChoseTool = true;
+            inInteractionArea = true;
             ZoneObject = collision.gameObject;
             //spawnPosition = collision.gameObject.transform.GetChild(0).GetComponent<Transform>();
             Debug.Log("Player entered the zone!" + isChoseTool);
@@ -160,13 +193,13 @@ public class MovePlayer : MonoBehaviour
 
     }
 
-
-    // Выход из зоны выбора оружия
+    // Выход из зоны выбора оружия:
     private void OnTriggerExit2D(Collider2D contаcted)
     {
         if (contаcted.gameObject.tag == "PosZone")
         {
             isChoseTool = false;
+            inInteractionArea = false;
             Debug.Log("Player left the zone!");
             // Выбрал орудие или не успел - убираем менюшку
         }
@@ -175,6 +208,21 @@ public class MovePlayer : MonoBehaviour
     public void CreateObjectWhen(GameObject gameObject, Transform SpawnPoint)
     {
         Instantiate(gameObject, SpawnPoint);
+    }
+
+    // Метод прогонов попыток ввести правильную комбинацию клавиш:
+    public bool TryEnterKeyQuest()
+    {
+        isLucky = false;
+        
+        // Идет череда попыток набрать комбинацию клавиш до тех пор,
+        // пока не получилось и пока внутри зоны взаимодействия с препятствием
+        while (!isLucky && inInteractionArea)
+        {
+            PlayerKeyChecker.correctAnswers = PlayerKeyChecker.GenerateRandomNums();
+        }
+
+        return isLucky;
     }
 
 }
