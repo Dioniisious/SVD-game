@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyForUseTools : MonoBehaviour
+public partial class PlayerKeyChecker : MonoBehaviour
 {
-    public List<string> GenerateRandomNums()
+    // Генератор 5 рандомных символов:
+    public static List<string> GenerateRandomNums()
     {
         const string charsForRandom = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -18,6 +18,7 @@ public class KeyForUseTools : MonoBehaviour
             outputChars.Add(current);
         }
 
+        Debug.Log("Сформирована комбинация клавиш для преодоления препятствия");
         return outputChars;
     }
 }
