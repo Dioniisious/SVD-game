@@ -54,7 +54,7 @@ public class MovePlayer : MonoBehaviour
                 health.TakeHit();
                 freeze = true;
                 invicible = true;
-                Physics2D.IgnoreLayerCollision(3,6, true);
+                Physics2D.IgnoreLayerCollision(3, 6, true);
                 StartCoroutine(Invicible(secondInvicible));
                 StartCoroutine(FreezeDamage(0.6f));
             }
@@ -92,49 +92,35 @@ public class MovePlayer : MonoBehaviour
             Debug.Log("Player entered the zone!" + isChoseTool);
 
             // Чекаем, на что нажали
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyUp(KeyCode.Alpha1))
             {
-                // Создаем луч, который идет от камеры через позицию клика
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                // Смотрим, в какой игровой объект попал луч
-                // И действуем в зависимости от того, куда кликнули
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.collider.CompareTag("SwordMenu"))
-                    {
-                        // Статус: вооружен мечом
-                    }
-                    if (hit.collider.CompareTag("SheildMenu"))
-                    {
-                        // Статус: вооружен щитом
-                    }
-                    if (hit.collider.CompareTag("HammerMenu"))
-                    {
-                        // Статус: вооружен кувалдой
-                    }
-                    if (hit.collider.CompareTag("KeyManu"))
-                    {
-                        // Статус: вооружен ключом
-                    }
-                    if (hit.collider.CompareTag("BridgeMenu"))
-                    {
-                        Debug.Log("Player clicked on Bridge!");
-                        // События: построится мост
-                    }
-                    if (hit.collider.CompareTag("TramplineMenu"))
-                    {
-                        Debug.Log("Player clicked on Trampline!");
-                        // События: построится батут
-                    }
-                    if (hit.collider.CompareTag("HeartMenu"))
-                    {
-                        Debug.Log("Player clicked on Heart!");
-                        // События: отнимется HP и полетит к жабе
-                    }
-                }
+                Debug.Log("Hammer");
             }
+            if (Input.GetKeyUp(KeyCode.Alpha2))
+            {
+                Debug.Log("Key");
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha3))
+            {
+                Debug.Log("Schield");
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha4))
+            {
+                Debug.Log("Sword");
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha5))
+            {
+                Debug.Log("Hearth");
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha6))
+            {
+                Debug.Log("Bridge");
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha7))
+            {
+                Debug.Log("Trampline");
+            }
+
         }
 
 
@@ -161,7 +147,7 @@ public class MovePlayer : MonoBehaviour
     {
         if (contаcted.gameObject.tag == "PosZone")
         {
-        isChoseTool = false;
+            isChoseTool = false;
             Debug.Log("Player left the zone!");
             // Выбрал орудие или не успел - убираем менюшку
         }
