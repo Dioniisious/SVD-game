@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tramline : MonoBehaviour
+public class Bridge : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private bool _push = false;
@@ -23,30 +23,25 @@ public class Tramline : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Lava")
-        {
-            Debug.Log("На лаве не может стоять батут");
-            Destroy(gameObject);
-        }
 
         if (collision.gameObject.tag == "Door")
         {
-            Debug.Log("Ты не можешь перепрыгнуть дверь");
+            Debug.Log("Дверь не удержит мост");
             _push = true;
             StartCoroutine(DestroyObj(3));
         }
 
         if (collision.gameObject.tag == "Wizard")
         {
-            Debug.Log("Враждебный маг не любит прыгать на батуте");
-            Destroy(gameObject);
+            Debug.Log("Маг с легкостью отбрасывает твой мост");
+            _push = true;
+            StartCoroutine(DestroyObj(3));
         }
 
         if (collision.gameObject.tag == "Scelet")
         {
-            Debug.Log("Скелет считает, что сейчас не время для развлечений");
-            _push = true;
-            StartCoroutine(DestroyObj(3));
+            Debug.Log("Скелет оказался слишком трухлявым для веса моста");
+            Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "Rat")
@@ -57,19 +52,15 @@ public class Tramline : MonoBehaviour
 
         if (collision.gameObject.tag == "Slime")
         {
-            Debug.Log("Батут застрял в Слайме");
-            Destroy(gameObject);
+            Debug.Log("Ты раздавил слайма");
+            Destroy(collision.gameObject);
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Capcan")
-        {
-            Debug.Log("Капкан захлопнулся");
-            Destroy(gameObject);
-            Destroy(collision.gameObject);
-        }
+
     }
 
     private IEnumerator DestroyObj(float second)

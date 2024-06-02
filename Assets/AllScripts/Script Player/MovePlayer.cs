@@ -31,15 +31,15 @@ public class MovePlayer : MonoBehaviour
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
-        // Чекаем, на что нажали
+        // Г—ГҐГЄГ ГҐГ¬, Г­Г  Г·ГІГ® Г­Г Г¦Г Г«ГЁ
         if (isChoseTool == true)
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
                 Debug.Log("Hammer");
-                // Попытки ввода комбинации клавиш:
+                // ГЏГ®ГЇГ»ГІГЄГЁ ГўГўГ®Г¤Г  ГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГЁ ГЄГ«Г ГўГЁГё:
                 keyQuestResult = TryEnterKeyQuest();
-                // Если удачно набрана комбинация - орудие/предмет появляется:
+                // Г…Г±Г«ГЁ ГіГ¤Г Г·Г­Г® Г­Г ГЎГ°Г Г­Г  ГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГї - Г®Г°ГіГ¤ГЁГҐ/ГЇГ°ГҐГ¤Г¬ГҐГІ ГЇГ®ГїГўГ«ГїГҐГІГ±Гї:
                 if (keyQuestResult)
                 {
                     toolInArm = "Hammer";
@@ -83,7 +83,7 @@ public class MovePlayer : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Alpha6))
             {
-                Debug.Log("Bridge");
+                Debug.Log("ГЏГ°ГЁГ§ГўГ Г« Г¬Г®Г±ГІ");
                 toolInArm = "Bridge";
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
                 keyQuestResult = TryEnterKeyQuest();
@@ -96,7 +96,7 @@ public class MovePlayer : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Alpha7))
             {
-                Debug.Log("TRAMPLINE IS GO");
+                Debug.Log("ГЏГ°ГЁГ§ГўГ Г« ГЃГ ГІГіГІ");
                 toolInArm = "Trampline";
                 spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
                 keyQuestResult = TryEnterKeyQuest();
@@ -157,7 +157,7 @@ public class MovePlayer : MonoBehaviour
                 health.TakeHit();
                 freeze = true;
                 _rb.velocity = transform.TransformDirection(new Vector2(0, _rb.velocity.y));
-                Debug.Log("Стою" + freeze);
+                Debug.Log("Г‘ГІГ®Гѕ" + freeze);
                 invicible = true;
                 StartCoroutine(FreezeDamage(collision.gameObject.GetComponent<Freeze>().secondFreeze));
                 StartCoroutine(Invicible(secondInvicible));
@@ -192,15 +192,15 @@ public class MovePlayer : MonoBehaviour
 
     }
 
-    // Выход из зоны выбора оружия:
-    private void OnTriggerExit2D(Collider2D contаcted)
+    // Г‚Г»ГµГ®Г¤ ГЁГ§ Г§Г®Г­Г» ГўГ»ГЎГ®Г°Г  Г®Г°ГіГ¦ГЁГї:
+    private void OnTriggerExit2D(Collider2D contГ cted)
     {
-        if (contаcted.gameObject.tag == "PosZone")
+        if (contГ cted.gameObject.tag == "PosZone")
         {
             isChoseTool = false;
             inInteractionArea = false;
             Debug.Log("Player left the zone!");
-            // Выбрал орудие или не успел - убираем менюшку
+            // Г‚Г»ГЎГ°Г Г« Г®Г°ГіГ¤ГЁГҐ ГЁГ«ГЁ Г­ГҐ ГіГ±ГЇГҐГ« - ГіГЎГЁГ°Г ГҐГ¬ Г¬ГҐГ­ГѕГёГЄГі
         }
     }
 
@@ -209,13 +209,13 @@ public class MovePlayer : MonoBehaviour
         Instantiate(gameObject, SpawnPoint);
     }
 
-    // Метод прогонов попыток ввести правильную комбинацию клавиш:
+    // ГЊГҐГІГ®Г¤ ГЇГ°Г®ГЈГ®Г­Г®Гў ГЇГ®ГЇГ»ГІГ®ГЄ ГўГўГҐГ±ГІГЁ ГЇГ°Г ГўГЁГ«ГјГ­ГіГѕ ГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГѕ ГЄГ«Г ГўГЁГё:
     public bool TryEnterKeyQuest()
     {
         isLucky = false;
         
-        // Идет череда попыток набрать комбинацию клавиш до тех пор,
-        // пока не получилось и пока внутри зоны взаимодействия с препятствием
+        // Г€Г¤ГҐГІ Г·ГҐГ°ГҐГ¤Г  ГЇГ®ГЇГ»ГІГ®ГЄ Г­Г ГЎГ°Г ГІГј ГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГѕ ГЄГ«Г ГўГЁГё Г¤Г® ГІГҐГµ ГЇГ®Г°,
+        // ГЇГ®ГЄГ  Г­ГҐ ГЇГ®Г«ГіГ·ГЁГ«Г®Г±Гј ГЁ ГЇГ®ГЄГ  ГўГ­ГіГІГ°ГЁ Г§Г®Г­Г» ГўГ§Г ГЁГ¬Г®Г¤ГҐГ©Г±ГІГўГЁГї Г± ГЇГ°ГҐГЇГїГІГ±ГІГўГЁГҐГ¬
         while (!isLucky && inInteractionArea)
         {
             PlayerKeyChecker.correctAnswers = PlayerKeyChecker.GenerateRandomNums();
