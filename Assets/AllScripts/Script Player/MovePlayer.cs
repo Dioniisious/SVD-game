@@ -31,15 +31,12 @@ public class MovePlayer : MonoBehaviour
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
-        // ×åêàåì, íà ÷òî íàæàëè
         if (isChoseTool == true)
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
                 Debug.Log("Hammer");
-                // Ïîïûòêè ââîäà êîìáèíàöèè êëàâèø:
                 keyQuestResult = TryEnterKeyQuest();
-                // Åñëè óäà÷íî íàáðàíà êîìáèíàöèÿ - îðóäèå/ïðåäìåò ïîÿâëÿåòñÿ:
                 if (keyQuestResult)
                 {
                     toolInArm = "Hammer";
@@ -192,7 +189,6 @@ public class MovePlayer : MonoBehaviour
 
     }
 
-    // Âûõîä èç çîíû âûáîðà îðóæèÿ:
     private void OnTriggerExit2D(Collider2D contàcted)
     {
         if (contàcted.gameObject.tag == "PosZone")
@@ -200,7 +196,6 @@ public class MovePlayer : MonoBehaviour
             isChoseTool = false;
             inInteractionArea = false;
             Debug.Log("Player left the zone!");
-            // Âûáðàë îðóäèå èëè íå óñïåë - óáèðàåì ìåíþøêó
         }
     }
 
@@ -209,13 +204,10 @@ public class MovePlayer : MonoBehaviour
         Instantiate(gameObject, SpawnPoint);
     }
 
-    // Ìåòîä ïðîãîíîâ ïîïûòîê ââåñòè ïðàâèëüíóþ êîìáèíàöèþ êëàâèø:
     public bool TryEnterKeyQuest()
     {
         isLucky = false;
         
-        // Èäåò ÷åðåäà ïîïûòîê íàáðàòü êîìáèíàöèþ êëàâèø äî òåõ ïîð,
-        // ïîêà íå ïîëó÷èëîñü è ïîêà âíóòðè çîíû âçàèìîäåéñòâèÿ ñ ïðåïÿòñòâèåì
         while (!isLucky && inInteractionArea)
         {
             PlayerKeyChecker.correctAnswers = PlayerKeyChecker.GenerateRandomNums();
