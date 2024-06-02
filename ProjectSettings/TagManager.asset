@@ -21,6 +21,13 @@ TagManager:
   - Wizard
   - Scelet
   - Slime
+  - HammerMenu
+  - KeyMenu
+  - SheildMenu
+  - SwordMenu
+  - TramplineMenu
+  - BridgeMenu
+  - HeartMenu
   layers:
   - Default
   - TransparentFX
