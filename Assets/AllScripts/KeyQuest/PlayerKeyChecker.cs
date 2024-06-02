@@ -51,7 +51,7 @@ public partial class PlayerKeyChecker : MonoBehaviour
                 }
             }
 
-            if (_equalityCounter == 5)
+            if (_equalityCounter != 5)
             {
                 Debug.Log("Комбинацию набрать не удалось, игрок получает урон");
                 // Получаем урон

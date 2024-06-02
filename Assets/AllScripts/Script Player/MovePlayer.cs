@@ -62,6 +62,7 @@ public class MovePlayer : MonoBehaviour
                 Debug.Log("Bridge");
                 toolInArm = "Bridge";
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
+
                 Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
                 toolInArm = null;
                 isChoseTool = false;
