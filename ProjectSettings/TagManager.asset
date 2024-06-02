@@ -14,15 +14,22 @@ TagManager:
   - Grabli
   - Capcan
   - Poop
+  - Jaba
+  - Door
+  - Rat
+  - Chest
+  - Wizard
+  - Scelet
+  - Slime
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - PosZone
-  - Point
+  - Player
+  - 
   - 
   - 
   - 

@@ -11,6 +11,7 @@ public class MovePlayer : MonoBehaviour
     private bool invicible = false, freeze = false;
     public Camera cam;
     private Rigidbody2D _rb;
+    public bool isChoseTool = false;
 
     private void Awake()
     {
@@ -97,5 +98,74 @@ public class MovePlayer : MonoBehaviour
         invicible = false;
         Physics2D.IgnoreLayerCollision(3, 6, false);
 
+    }
+
+    // Вход в зону выбора оружия
+    private void OnTriggerEnter(Collider contаcted)
+    {
+        if (contаcted.gameObject.tag == "possibilityZone")
+        {
+            Debug.Log("Player entered the zone!");
+            // Всплывает менюшка - точнее, предметы из меню
+            GameObject swordInMenu = GameObject.Find("SwordMenu");
+            GameObject sheildInMenu = GameObject.Find("SheildMenu");
+            GameObject hammerInMenu = GameObject.Find("HammerMenu");
+            GameObject keyInMenu = GameObject.Find("KeyMenu");
+            GameObject bridgeInMenu = GameObject.Find("BridgeMenu");
+            GameObject tramplineInMenu = GameObject.Find("TramplineMenu");
+            GameObject heartInMenu = GameObject.Find("HeartMenu");
+
+            // Чекаем, на что нажали
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Создаем луч, который идет от камеры через позицию клика
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                // Смотрим, в какой игровой объект попал луч
+                // И действуем в зависимости от того, куда кликнули
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.CompareTag("SwordMenu"))
+                    {
+                        Debug.Log("Player clicked on Sword!");
+                    }
+                    if (hit.collider.CompareTag("SheildMenu"))
+                    {
+                        Debug.Log("Player clicked on Sheild!");
+                    }
+                    if (hit.collider.CompareTag("HammerMenu"))
+                    {
+                        Debug.Log("Player clicked on Hammer!");
+                    }
+                    if (hit.collider.CompareTag("KeyManu"))
+                    {
+                        Debug.Log("Player clicked on Key!");
+                    }
+                    if (hit.collider.CompareTag("BridgeMenu"))
+                    {
+                        Debug.Log("Player clicked on Bridge!");
+                    }
+                    if (hit.collider.CompareTag("TramplineMenu"))
+                    {
+                        Debug.Log("Player clicked on Trampline!");
+                    }
+                    if (hit.collider.CompareTag("HeartMenu"))
+                    {
+                        Debug.Log("Player clicked on Heart!");
+                    }
+                }
+            }
+        }
+    }
+
+    // Выход из зоны выбора оружия
+    private void OnTriggerExit(Collider contаcted)
+    {
+        if (contаcted.gameObject.tag == "possibilityZone" && !isChoseTool)
+        {
+            Debug.Log("Player left the zone!");
+            // Выбрал орудие или не успел - убираем менюшку
+        }
     }
 }
