@@ -28,49 +28,52 @@ public class MovePlayer : MonoBehaviour
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
+
         // Чекаем, на что нажали
         if (isChoseTool == true)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKey(KeyCode.Alpha1))
             {
                 Debug.Log("Hammer");
                 toolInArm = "Hammer";
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKey(KeyCode.Alpha2))
             {
                 Debug.Log("Key");
                 toolInArm = "Key";
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKey(KeyCode.Alpha3))
             {
                 Debug.Log("Schield");
                 toolInArm = "Schield";
             }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
+            if (Input.GetKey(KeyCode.Alpha4))
             {
                 Debug.Log("Sword");
                 toolInArm = "Sword";
             }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
+            if (Input.GetKey(KeyCode.Alpha5))
             {
                 Debug.Log("Hearth");
                 toolInArm = "Hearth";
             }
-            if (Input.GetKeyDown(KeyCode.Alpha6))
+            if (Input.GetKey(KeyCode.Alpha6))
             {
                 Debug.Log("Bridge");
                 toolInArm = "Bridge";
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
                 Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
                 toolInArm = null;
+                isChoseTool = false;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha7))
+            if (Input.GetKey(KeyCode.Alpha7))
             {
-                Debug.Log("Trampline");
+                Debug.Log("TRAMPLINE IS GO");
                 toolInArm = "Trampline";
                 spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
                 Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
                 toolInArm = null;
+                isChoseTool = false;
             }
         }
     }
@@ -79,7 +82,6 @@ public class MovePlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "Trampoline")
         {
-            Debug.Log("Trampoline");
             _rb.AddForce(new Vector2(horizTramplineJump * 1000, verticTramplineJump * 1000) * Time.fixedDeltaTime);
         }
 
@@ -87,7 +89,6 @@ public class MovePlayer : MonoBehaviour
         {
             if (collision.gameObject.tag == "Spikes" || collision.gameObject.tag == "Lava" || collision.gameObject.tag == "Grabli")
             {
-                Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 _rb.AddForce(new Vector2(damageHJump * 1000, damageVJump * 1000) * Time.fixedDeltaTime);
                 health.TakeHit();
@@ -96,7 +97,6 @@ public class MovePlayer : MonoBehaviour
             }
             if (collision.gameObject.tag == "Jaba" || collision.gameObject.tag == "Rat" || collision.gameObject.tag == "Wizard" || collision.gameObject.tag == "Scelet" || collision.gameObject.tag == "Slime")
             {
-                Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 _rb.velocity = transform.TransformDirection(new Vector2(0, _rb.velocity.y));
                 _rb.AddForce(new Vector2(damageHJump * -100, damageVJump * 300) * Time.fixedDeltaTime);
@@ -114,7 +114,6 @@ public class MovePlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "ZoneToJump")
         {
-            Debug.Log("TrampolineZone");
             _rb.AddForce(new Vector2(miniHorizontalJump * 1000, miniVerticalJump * 1000) * Time.fixedDeltaTime);
         }
 
@@ -122,7 +121,6 @@ public class MovePlayer : MonoBehaviour
         {
             if (collision.gameObject.tag == "Grabli" || collision.gameObject.tag == "Capcan" || collision.gameObject.tag == "Poop")
             {
-                Debug.Log(collision.gameObject.tag);
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 health.TakeHit();
                 freeze = true;

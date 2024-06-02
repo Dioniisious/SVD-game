@@ -12,7 +12,6 @@ public class PosibPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player In");
             posPointEnable.SetActive(true);
             activeBuild = true;
 }
@@ -22,7 +21,6 @@ public class PosibPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player Out");
             Destroy(posPointEnable);
             activeBuild = false;
         }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 89184536561852907}
   - component: {fileID: 6452887782012470617}
   - component: {fileID: 5859774092201910213}
+  - component: {fileID: 5246041142100450655}
   m_Layer: 0
   m_Name: Trampoline
   m_TagString: Trampoline
@@ -158,6 +159,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.274826, y: 1.6200647}
   m_EdgeRadius: 0
+--- !u!114 &5246041142100450655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419558249705890786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80bbd88ff9f69b74e81bd6805dd46ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TramplineZone: {fileID: 4475559840880598625}
 --- !u!1 &4475559840880598625
 GameObject:
   m_ObjectHideFlags: 0
