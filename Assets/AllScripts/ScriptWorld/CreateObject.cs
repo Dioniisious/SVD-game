@@ -6,6 +6,7 @@ public class CreateObject : MonoBehaviour
 {
     public GameObject[] gameObjectPossibly;
     public GameObject swordInMenu, sheildInMenu, hammerInMenu, keyInMenu, bridgeInMenu, tramplineInMenu, heartInMenu;
+    public GameObject swordReal, sheildReal, hammerReal, keyReal, bridgeReal, tramplineReal, heartReal;
 
     private void Awake()
     {
@@ -18,8 +19,10 @@ public class CreateObject : MonoBehaviour
         heartInMenu = GameObject.FindGameObjectWithTag("HeartMenu");
     }
 
-    public void CreateObjectWhen(int numberPossibly, Transform position)
+
+
+    public void CreateObjectWhen(GameObject gameObject, Transform SpawnPoint)
     {
-        Instantiate(gameObjectPossibly[numberPossibly], position);
+        Instantiate(gameObject, SpawnPoint);
     }
 }

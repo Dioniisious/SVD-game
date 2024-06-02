@@ -11,7 +11,7 @@ public class PosibPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Player");
+            Debug.Log("Player In");
             posPointEnable.SetActive(true);
             activeBuild = true;
 }

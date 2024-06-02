@@ -17,6 +17,7 @@ public class MovePlayer : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        toolInArm = null;
     }
 
     private void FixedUpdate()
@@ -84,30 +85,12 @@ public class MovePlayer : MonoBehaviour
             }
 
         }
-    }
 
-    private IEnumerator FreezeDamage(float second)
-    {
-        yield return new WaitForSeconds(second);
-        freeze = false;
-
-    }
-
-    private IEnumerator Invicible(float second)
-    {
-        yield return new WaitForSeconds(second);
-        invicible = false;
-        Physics2D.IgnoreLayerCollision(3, 6, false);
-
-    }
-
-    // Вход в зону выбора оружия
-    private void OnTriggerEnter(Collider contаcted)
-    {
-        if (contаcted.gameObject.tag == "possibilityZone")
+        if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
-            Debug.Log("Player entered the zone!");
-            
+            isChoseTool = true;
+            Debug.Log("Player entered the zone!" + isChoseTool);
+
             // Чекаем, на что нажали
             if (Input.GetMouseButtonDown(0))
             {
@@ -153,13 +136,32 @@ public class MovePlayer : MonoBehaviour
                 }
             }
         }
+
+
     }
 
-    // Выход из зоны выбора оружия
-    private void OnTriggerExit(Collider contаcted)
+    private IEnumerator FreezeDamage(float second)
     {
-        if (contаcted.gameObject.tag == "possibilityZone" && !isChoseTool)
+        yield return new WaitForSeconds(second);
+        freeze = false;
+
+    }
+
+    private IEnumerator Invicible(float second)
+    {
+        yield return new WaitForSeconds(second);
+        invicible = false;
+        Physics2D.IgnoreLayerCollision(3, 6, false);
+
+    }
+
+
+    // Выход из зоны выбора оружия
+    private void OnTriggerExit2D(Collider2D contаcted)
+    {
+        if (contаcted.gameObject.tag == "PosZone")
         {
+        isChoseTool = false;
             Debug.Log("Player left the zone!");
             // Выбрал орудие или не успел - убираем менюшку
         }
