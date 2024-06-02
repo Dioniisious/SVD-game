@@ -107,15 +107,7 @@ public class MovePlayer : MonoBehaviour
         if (contаcted.gameObject.tag == "possibilityZone")
         {
             Debug.Log("Player entered the zone!");
-            // Всплывает менюшка - точнее, предметы из меню
-            GameObject swordInMenu = GameObject.Find("SwordMenu");
-            GameObject sheildInMenu = GameObject.Find("SheildMenu");
-            GameObject hammerInMenu = GameObject.Find("HammerMenu");
-            GameObject keyInMenu = GameObject.Find("KeyMenu");
-            GameObject bridgeInMenu = GameObject.Find("BridgeMenu");
-            GameObject tramplineInMenu = GameObject.Find("TramplineMenu");
-            GameObject heartInMenu = GameObject.Find("HeartMenu");
-
+            
             // Чекаем, на что нажали
             if (Input.GetMouseButtonDown(0))
             {
@@ -129,22 +121,18 @@ public class MovePlayer : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("SwordMenu"))
                     {
-                        Debug.Log("Player clicked on Sword!");
                         // Статус: вооружен мечом
                     }
                     if (hit.collider.CompareTag("SheildMenu"))
                     {
-                        Debug.Log("Player clicked on Sheild!");
                         // Статус: вооружен щитом
                     }
                     if (hit.collider.CompareTag("HammerMenu"))
                     {
-                        Debug.Log("Player clicked on Hammer!");
                         // Статус: вооружен кувалдой
                     }
                     if (hit.collider.CompareTag("KeyManu"))
                     {
-                        Debug.Log("Player clicked on Key!");
                         // Статус: вооружен ключом
                     }
                     if (hit.collider.CompareTag("BridgeMenu"))
