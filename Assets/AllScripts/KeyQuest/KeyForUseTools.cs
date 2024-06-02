@@ -18,7 +18,11 @@ public partial class PlayerKeyChecker : MonoBehaviour
             outputChars.Add(current);
         }
 
-        Debug.Log("Сформирована комбинация клавиш для преодоления препятствия");
+        Debug.Log("Сформирована комбинация клавиш для преодоления препятствия (5 символов построчно)");
+        foreach (string str in outputChars)
+        {
+            Debug.Log(str);
+        }
         return outputChars;
     }
 }

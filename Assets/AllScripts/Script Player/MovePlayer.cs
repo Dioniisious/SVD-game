@@ -31,7 +31,6 @@ public class MovePlayer : MonoBehaviour
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
-
         // Чекаем, на что нажали
         if (isChoseTool == true)
         {
