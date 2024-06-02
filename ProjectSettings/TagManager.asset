@@ -11,6 +11,9 @@ TagManager:
   - PosZone
   - ZoneToJump
   - Lava
+  - Grabli
+  - Capcan
+  - Poop
   layers:
   - Default
   - TransparentFX
