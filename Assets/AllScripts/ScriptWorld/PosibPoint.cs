@@ -5,6 +5,7 @@ using UnityEngine;
 public class PosibPoint : MonoBehaviour
 {
     public GameObject posPointEnable;
+    public Transform SpawnPoint;
     public bool activeBuild = false;
 
     private void OnTriggerEnter2D(Collider2D collision)

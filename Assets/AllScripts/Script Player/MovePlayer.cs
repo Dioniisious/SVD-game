@@ -10,9 +10,12 @@ public class MovePlayer : MonoBehaviour
     public float miniHorizontalJump, miniVerticalJump;
     private bool invicible = false, freeze = false;
     public Camera cam;
+    public Transform spawnPosition;
     private Rigidbody2D _rb;
     public bool isChoseTool = false;
     public string toolInArm;
+    public GameObject ZoneObject;
+    public GameObject swordReal, sheildReal, hammerReal, keyReal, bridgeReal, tramplineReal, heartReal;
 
     private void Awake()
     {
@@ -31,30 +34,43 @@ public class MovePlayer : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 Debug.Log("Hammer");
+                toolInArm = "Hammer";
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Debug.Log("Key");
+                toolInArm = "Key";
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 Debug.Log("Schield");
+                toolInArm = "Schield";
             }
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 Debug.Log("Sword");
+                toolInArm = "Sword";
             }
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 Debug.Log("Hearth");
+                toolInArm = "Hearth";
             }
             if (Input.GetKeyDown(KeyCode.Alpha6))
             {
                 Debug.Log("Bridge");
+                toolInArm = "Bridge";
+                spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
+                Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                toolInArm = null;
             }
             if (Input.GetKeyDown(KeyCode.Alpha7))
             {
                 Debug.Log("Trampline");
+                toolInArm = "Trampline";
+                spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
+                Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                toolInArm = null;
             }
         }
     }
@@ -122,6 +138,8 @@ public class MovePlayer : MonoBehaviour
         if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
             isChoseTool = true;
+            ZoneObject = collision.gameObject;
+            //spawnPosition = collision.gameObject.transform.GetChild(0).GetComponent<Transform>();
             Debug.Log("Player entered the zone!" + isChoseTool);
         }
 
@@ -154,4 +172,10 @@ public class MovePlayer : MonoBehaviour
             // Выбрал орудие или не успел - убираем менюшку
         }
     }
+
+    public void CreateObjectWhen(GameObject gameObject, Transform SpawnPoint)
+    {
+        Instantiate(gameObject, SpawnPoint);
+    }
+
 }
