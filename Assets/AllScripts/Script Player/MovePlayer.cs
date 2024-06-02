@@ -11,6 +11,7 @@ public class MovePlayer : MonoBehaviour
     private bool invicible = false, freeze = false;
     public Camera cam;
     private Rigidbody2D _rb;
+    public bool isChoseTool = false;
 
     private void Awake()
     {
@@ -75,5 +76,26 @@ public class MovePlayer : MonoBehaviour
         yield return new WaitForSeconds(second);
         invicible = true;
 
+    }
+
+    // Вход в зону выбора оружия
+    private void OnTriggerEnter(Collider contаcted)
+    {
+        if (contаcted.gameObject.tag == "possibilityZone")
+        {
+            Debug.Log("Player entered the zone!");
+            // Всплывает менюшка - точнее, предметы из меню
+            // Логика выбора будет отдельно. Ьуь проверим только, успел ли игрок выбрать орудие 
+        }
+    }
+
+    // Выход из зоны выбора оружия
+    private void OnTriggerExit(Collider contаcted)
+    {
+        if (contаcted.gameObject.tag == "possibilityZone" && !isChoseTool)
+        {
+            Debug.Log("Player left the zone!");
+            // Выбрал орудие или не успел - убираем менюшку
+        }
     }
 }
