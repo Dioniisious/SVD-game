@@ -12,6 +12,7 @@ public class MovePlayer : MonoBehaviour
     public Camera cam;
     private Rigidbody2D _rb;
     public bool isChoseTool = false;
+    public string toolInArm;
 
     private void Awake()
     {
@@ -107,30 +108,37 @@ public class MovePlayer : MonoBehaviour
                     if (hit.collider.CompareTag("SwordMenu"))
                     {
                         Debug.Log("Player clicked on Sword!");
+                        // Статус: вооружен мечом
                     }
                     if (hit.collider.CompareTag("SheildMenu"))
                     {
                         Debug.Log("Player clicked on Sheild!");
+                        // Статус: вооружен щитом
                     }
                     if (hit.collider.CompareTag("HammerMenu"))
                     {
                         Debug.Log("Player clicked on Hammer!");
+                        // Статус: вооружен кувалдой
                     }
                     if (hit.collider.CompareTag("KeyManu"))
                     {
                         Debug.Log("Player clicked on Key!");
+                        // Статус: вооружен ключом
                     }
                     if (hit.collider.CompareTag("BridgeMenu"))
                     {
                         Debug.Log("Player clicked on Bridge!");
+                        // События: построится мост
                     }
                     if (hit.collider.CompareTag("TramplineMenu"))
                     {
                         Debug.Log("Player clicked on Trampline!");
+                        // События: построится батут
                     }
                     if (hit.collider.CompareTag("HeartMenu"))
                     {
                         Debug.Log("Player clicked on Heart!");
+                        // События: отнимется HP и полетит к жабе
                     }
                 }
             }
