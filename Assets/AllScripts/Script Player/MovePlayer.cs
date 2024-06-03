@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Playables;
 using UnityEngine;
 
@@ -18,92 +19,123 @@ public class MovePlayer : MonoBehaviour
     public static bool isLucky = false;
     public string toolInArm;
     public GameObject ZoneObject;
-    public GameObject swordReal, sheildReal, hammerReal, keyReal, bridgeReal, tramplineReal, heartReal;
+    public GameObject AttackZone;
+    public GameObject bridgeReal, tramplineReal;
+    public bool ActiveSword = false;
+    public bool shieldActive = false;
+    public float AttackZoneDistanseX;
+    public float CountPaper;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         toolInArm = null;
+        freeze = false;
     }
 
     private void FixedUpdate()
     {
+        AttackZone.transform.position = new Vector3(transform.position.x + AttackZoneDistanseX, transform.position.y, 0);
+
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
         if (isChoseTool == true)
         {
+            CountPaper = gameObject.GetComponent<Paper>().paperCount;
             if (Input.GetKey(KeyCode.Alpha1))
             {
                 Debug.Log("Hammer");
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    toolInArm = "Hammer";
-                }
+                //keyQuestResult = TryEnterKeyQuest();
+                //if (keyQuestResult)
+                //{
+                //    toolInArm = "Hammer";
+                //}
             }
+
             if (Input.GetKey(KeyCode.Alpha2))
             {
                 Debug.Log("Key");
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    toolInArm = "Key";
-                }
+                //keyQuestResult = TryEnterKeyQuest();
+                //if (keyQuestResult)
+                //{
+                //    toolInArm = "Key";
+                //}
             }
+
             if (Input.GetKey(KeyCode.Alpha3))
             {
                 Debug.Log("Schield");
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    toolInArm = "Schield";
-                }
+                //keyQuestResult = TryEnterKeyQuest();
+                //if (keyQuestResult)
+                //{
+                //    toolInArm = "Schield";
+                //}
+                toolInArm = "Shield";
+                shieldActive = true;
+                CountPaper -= 1;
+                if (shieldActive == true)
+                    AttackZone.SetActive(true);
+                toolInArm = null;
+                isChoseTool = false;
             }
+
             if (Input.GetKey(KeyCode.Alpha4))
             {
                 Debug.Log("Sword");
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    toolInArm = "Sword";
-                }
+                toolInArm = "Sword";
+                ActiveSword = true;
+                CountPaper -= 1;
+                if (ActiveSword == true)
+                    AttackZone.SetActive(true);
+
+                // keyQuestResult = TryEnterKeyQuest();
+                // if (keyQuestResult)
+                // {
+                //     toolInArm = "Sword";
+                // }
+                toolInArm = null;
+                isChoseTool = false;
             }
             if (Input.GetKey(KeyCode.Alpha5))
             {
                 Debug.Log("Hearth");
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    toolInArm = "Hearth";
-                }
+                // keyQuestResult = TryEnterKeyQuest();
+                //if (keyQuestResult)
+                //{
+                //    toolInArm = "Hearth";
+                //}
             }
             if (Input.GetKey(KeyCode.Alpha6))
             {
-                Debug.Log("Ïðèçâàë ìîñò");
+                Debug.Log("Bridge");
                 toolInArm = "Bridge";
+                CountPaper -= 2;
                 spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
-                }
+                Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                //keyQuestResult = TryEnterKeyQuest();
+                //if (keyQuestResult)
+                //{
+                //}
                 toolInArm = null;
                 isChoseTool = false;
             }
             if (Input.GetKey(KeyCode.Alpha7))
             {
-                Debug.Log("Ïðèçâàë Áàòóò");
+                Debug.Log("Trampline");
                 toolInArm = "Trampline";
+                CountPaper -= 1;
                 spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
-                keyQuestResult = TryEnterKeyQuest();
-                if (keyQuestResult)
-                {
-                    Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
-                }
+                Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                //keyQuestResult = TryEnterKeyQuest();
+                //if (keyQuestResult)
+                //{
+                //}
                 toolInArm = null;
                 isChoseTool = false;
             }
+
+            gameObject.GetComponent<Paper>().paperCount = CountPaper;
         }
     }
 
@@ -116,7 +148,7 @@ public class MovePlayer : MonoBehaviour
 
         if (invicible == false)
         {
-            if (collision.gameObject.tag == "Spikes" || collision.gameObject.tag == "Lava" || collision.gameObject.tag == "Grabli")
+            if (collision.gameObject.tag == "Spikes" || collision.gameObject.tag == "Lava")
             {
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
                 _rb.AddForce(new Vector2(damageHJump * 1000, damageVJump * 1000) * Time.fixedDeltaTime);
@@ -124,6 +156,7 @@ public class MovePlayer : MonoBehaviour
                 invicible = true;
                 StartCoroutine(Invicible(secondInvicible));
             }
+
             if (collision.gameObject.tag == "Jaba" || collision.gameObject.tag == "Rat" || collision.gameObject.tag == "Wizard" || collision.gameObject.tag == "Scelet" || collision.gameObject.tag == "Slime")
             {
                 HealthPlayer health = gameObject.GetComponent<HealthPlayer>();
@@ -154,7 +187,7 @@ public class MovePlayer : MonoBehaviour
                 health.TakeHit();
                 freeze = true;
                 _rb.velocity = transform.TransformDirection(new Vector2(0, _rb.velocity.y));
-                Debug.Log("Ñòîþ" + freeze);
+                Debug.Log("Обожди" + freeze);
                 invicible = true;
                 StartCoroutine(FreezeDamage(collision.gameObject.GetComponent<Freeze>().secondFreeze));
                 StartCoroutine(Invicible(secondInvicible));
@@ -207,7 +240,7 @@ public class MovePlayer : MonoBehaviour
     public bool TryEnterKeyQuest()
     {
         isLucky = false;
-        
+
         while (!isLucky && inInteractionArea)
         {
             PlayerKeyChecker.correctAnswers = PlayerKeyChecker.GenerateRandomNums();

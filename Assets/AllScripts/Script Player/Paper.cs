@@ -9,7 +9,7 @@ public class Paper : MonoBehaviour
     public float maxPaper = 20;
     public Text paperText;
 
-    private void Start()
+    private void FixedUpdate()
     {
         paperText.text = paperCount.ToString();
     }
