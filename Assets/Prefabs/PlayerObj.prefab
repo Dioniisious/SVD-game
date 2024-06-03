@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 9039401629975434471}
   - component: {fileID: 7030954907983512011}
   - component: {fileID: 6054707151539679384}
-  - component: {fileID: 2470690363831889723}
   - component: {fileID: 1462792920732452982}
+  - component: {fileID: 404307711698375590}
+  - component: {fileID: 2612334713173799259}
   m_Layer: 0
   m_Name: AttackZone
   m_TagString: Untagged
@@ -146,7 +147,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 5525772628814628714}
---- !u!50 &2470690363831889723
+  _swordActive: 0
+--- !u!114 &1462792920732452982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14125416482489996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5fcab616ae3db241865c864d9edba6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 5525772628814628714}
+  _shieldActive: 0
+--- !u!50 &404307711698375590
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -173,7 +189,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1462792920732452982
+--- !u!114 &2612334713173799259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,10 +198,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 14125416482489996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5fcab616ae3db241865c864d9edba6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cc52b08dae0f4c4e98c9798848dc34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 5525772628814628714}
+  heartIsActive: 0
 --- !u!1 &4913066652450016092
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,9 +429,11 @@ MonoBehaviour:
   AttackZone: {fileID: 14125416482489996}
   bridgeReal: {fileID: 1038144497877035225, guid: 04c94a8c7f957e14dbbe2f17275c6b0f, type: 3}
   tramplineReal: {fileID: 7032430563480911012, guid: ca9b87a7bd30e724fbcd2c31729b22c0, type: 3}
-  swordActive: 0
+  ActiveSword: 0
+  ActiveHearth: 0
   shieldActive: 0
   AttackZoneDistanseX: 0.7
+  CountPaper: 0
 --- !u!114 &1984636078949209017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,3 +491,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  _swordActive: 0

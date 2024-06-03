@@ -10,7 +10,6 @@ public class Shield : MonoBehaviour
     private void FixedUpdate()
     {
         _shieldActive = Player.GetComponent<MovePlayer>().shieldActive;
-        Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,6 +21,7 @@ public class Shield : MonoBehaviour
             {
                 Debug.Log("Щита недостаточно, чтобы сломать дверь");
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
 
             }
@@ -31,6 +31,7 @@ public class Shield : MonoBehaviour
                 Debug.Log("Щит защитил тебя от мага");
                 Destroy(collision.gameObject);
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
 
             }
@@ -40,6 +41,7 @@ public class Shield : MonoBehaviour
                 Debug.Log("Толкнул скелета мечом, он и развалился");
                 Destroy(collision.gameObject);
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 
@@ -47,6 +49,7 @@ public class Shield : MonoBehaviour
             {
                 Debug.Log("Ты не заметил крысу из за большого щита");
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 
@@ -54,6 +57,7 @@ public class Shield : MonoBehaviour
             {
                 Debug.Log("Твой щит застрял в слайме");
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 
@@ -61,6 +65,7 @@ public class Shield : MonoBehaviour
             {
                 Debug.Log("Твой щит был потерян при схватке с жабой");
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 
@@ -76,6 +81,7 @@ public class Shield : MonoBehaviour
             {
                 Debug.Log("У тебя настолько большой щит, что ты не замечаешь капкан");
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 
@@ -84,6 +90,7 @@ public class Shield : MonoBehaviour
                 Debug.Log("Щит смог защитить тебя от Грабель");
                 Destroy(collision.gameObject);
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 
@@ -91,6 +98,7 @@ public class Shield : MonoBehaviour
             {
                 Debug.Log("Щит не дает возможности тебе увидеть какаху на пути");
                 _shieldActive = false;
+                Player.GetComponent<MovePlayer>().shieldActive = _shieldActive;
                 gameObject.SetActive(false);
             }
 

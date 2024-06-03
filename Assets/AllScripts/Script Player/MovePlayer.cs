@@ -22,8 +22,12 @@ public class MovePlayer : MonoBehaviour
     public GameObject AttackZone;
     public GameObject bridgeReal, tramplineReal;
     public bool ActiveSword = false;
+    public bool ActiveHearth = false;
+    public bool ActiveHammer = false;
+    public bool ActiveKey = false;
     public bool shieldActive = false;
     public float AttackZoneDistanseX;
+    public float AttackZoneDistanseY;
     public float CountPaper;
 
     private void Awake()
@@ -35,7 +39,7 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AttackZone.transform.position = new Vector3(transform.position.x + AttackZoneDistanseX, transform.position.y, 0);
+        AttackZone.transform.position = new Vector3(transform.position.x + AttackZoneDistanseX, transform.position.y +AttackZoneDistanseY, 0);
 
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
@@ -43,99 +47,122 @@ public class MovePlayer : MonoBehaviour
         if (isChoseTool == true)
         {
             CountPaper = gameObject.GetComponent<Paper>().paperCount;
-            if (Input.GetKey(KeyCode.Alpha1))
-            {
-                Debug.Log("Hammer");
-                //keyQuestResult = TryEnterKeyQuest();
-                //if (keyQuestResult)
-                //{
-                //    toolInArm = "Hammer";
-                //}
-            }
 
-            if (Input.GetKey(KeyCode.Alpha2))
+            if (CountPaper > 0)
             {
-                Debug.Log("Key");
-                //keyQuestResult = TryEnterKeyQuest();
-                //if (keyQuestResult)
-                //{
-                //    toolInArm = "Key";
-                //}
-            }
-
-            if (Input.GetKey(KeyCode.Alpha3))
-            {
-                Debug.Log("Schield");
-                //keyQuestResult = TryEnterKeyQuest();
-                //if (keyQuestResult)
-                //{
-                //    toolInArm = "Schield";
-                //}
-                toolInArm = "Shield";
-                shieldActive = true;
-                CountPaper -= 1;
-                if (shieldActive == true)
+                if (Input.GetKey(KeyCode.Alpha1))
+                {
+                    Debug.Log("Hammer");
+                    toolInArm = "Hammer";
+                    ActiveHammer = true;
+                    CountPaper -= 2;
                     AttackZone.SetActive(true);
-                toolInArm = null;
-                isChoseTool = false;
-            }
+                    //keyQuestResult = TryEnterKeyQuest();
+                    //if (keyQuestResult)
+                    //{
+                    //    toolInArm = "Hammer";
+                    //}
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
 
-            if (Input.GetKey(KeyCode.Alpha4))
-            {
-                Debug.Log("Sword");
-                toolInArm = "Sword";
-                ActiveSword = true;
-                CountPaper -= 1;
-                if (ActiveSword == true)
+                if (Input.GetKey(KeyCode.Alpha2))
+                {
+                    Debug.Log("Key");
+                    toolInArm = "Key";
+                    ActiveKey = true;
+                    CountPaper -= 1;
                     AttackZone.SetActive(true);
+                    //keyQuestResult = TryEnterKeyQuest();
+                    //if (keyQuestResult)
+                    //{
+                    //    toolInArm = "Key";
+                    //}
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
 
-                // keyQuestResult = TryEnterKeyQuest();
-                // if (keyQuestResult)
-                // {
-                //     toolInArm = "Sword";
-                // }
-                toolInArm = null;
-                isChoseTool = false;
-            }
-            if (Input.GetKey(KeyCode.Alpha5))
-            {
-                Debug.Log("Hearth");
-                // keyQuestResult = TryEnterKeyQuest();
-                //if (keyQuestResult)
-                //{
-                //    toolInArm = "Hearth";
-                //}
-            }
-            if (Input.GetKey(KeyCode.Alpha6))
-            {
-                Debug.Log("Bridge");
-                toolInArm = "Bridge";
-                CountPaper -= 2;
-                spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
-                Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
-                //keyQuestResult = TryEnterKeyQuest();
-                //if (keyQuestResult)
-                //{
-                //}
-                toolInArm = null;
-                isChoseTool = false;
-            }
-            if (Input.GetKey(KeyCode.Alpha7))
-            {
-                Debug.Log("Trampline");
-                toolInArm = "Trampline";
-                CountPaper -= 1;
-                spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
-                Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
-                //keyQuestResult = TryEnterKeyQuest();
-                //if (keyQuestResult)
-                //{
-                //}
-                toolInArm = null;
-                isChoseTool = false;
+                if (Input.GetKey(KeyCode.Alpha3))
+                {
+                    Debug.Log("Schield");
+                    //keyQuestResult = TryEnterKeyQuest();
+                    //if (keyQuestResult)
+                    //{
+                    //    toolInArm = "Schield";
+                    //}
+                    toolInArm = "Shield";
+                    shieldActive = true;
+                    CountPaper -= 1;
+                    if (shieldActive == true)
+                        AttackZone.SetActive(true);
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
+
+                if (Input.GetKey(KeyCode.Alpha4))
+                {
+                    Debug.Log("Sword");
+                    toolInArm = "Sword";
+                    ActiveSword = true;
+                    CountPaper -= 1;
+                    if (ActiveSword == true)
+                        AttackZone.SetActive(true);
+
+                    // keyQuestResult = TryEnterKeyQuest();
+                    // if (keyQuestResult)
+                    // {
+                    //     toolInArm = "Sword";
+                    // }
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
+                if (Input.GetKey(KeyCode.Alpha5))
+                {
+                    Debug.Log("Hearth");
+                    toolInArm = "Hearth";
+                    ActiveHearth = true;
+                    CountPaper -= 2;
+                    AttackZone.SetActive(true);
+                    // keyQuestResult = TryEnterKeyQuest();
+                    //if (keyQuestResult)
+                    //{
+                    //    toolInArm = "Hearth";
+                    //}
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
+                if (Input.GetKey(KeyCode.Alpha6))
+                {
+                    Debug.Log("Bridge");
+                    toolInArm = "Bridge";
+                    CountPaper -= 2;
+                    spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
+                    Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
+                    //keyQuestResult = TryEnterKeyQuest();
+                    //if (keyQuestResult)
+                    //{
+                    //}
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
+                if (Input.GetKey(KeyCode.Alpha7))
+                {
+                    Debug.Log("Trampline");
+                    toolInArm = "Trampline";
+                    CountPaper -= 1;
+                    spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
+                    Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
+                    //keyQuestResult = TryEnterKeyQuest();
+                    //if (keyQuestResult)
+                    //{
+                    //}
+                    toolInArm = null;
+                    isChoseTool = false;
+                }
+
+                gameObject.GetComponent<Paper>().paperCount = CountPaper;
             }
 
-            gameObject.GetComponent<Paper>().paperCount = CountPaper;
         }
     }
 

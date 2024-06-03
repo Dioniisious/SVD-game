@@ -10,7 +10,6 @@ public class Sword : MonoBehaviour
     private void FixedUpdate()
     {
         _swordActive = Player.GetComponent<MovePlayer>().ActiveSword;
-        Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,6 +21,7 @@ public class Sword : MonoBehaviour
             {
                 Debug.Log("Меча недостаточно, чтобы сломать дверь");
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
 
             }
@@ -30,6 +30,7 @@ public class Sword : MonoBehaviour
             {
                 Debug.Log("Меч не способен тебя защитить от магии");
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
 
             }
@@ -39,6 +40,7 @@ public class Sword : MonoBehaviour
                 Debug.Log("Скелет не справится с мечом");
                 Destroy(collision.gameObject);
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
             }
 
@@ -47,6 +49,7 @@ public class Sword : MonoBehaviour
                 Debug.Log("Ты зарубил крысу");
                 Destroy(collision.gameObject);
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
             }
 
@@ -54,6 +57,7 @@ public class Sword : MonoBehaviour
             {
                 Debug.Log("Твой меч застрял в слайме");
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
             }
 
@@ -62,6 +66,7 @@ public class Sword : MonoBehaviour
                 Debug.Log("Жаба проглотила острый конец меча");
                 Destroy(collision.gameObject);
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
             }
 
@@ -77,6 +82,7 @@ public class Sword : MonoBehaviour
             {
                 Debug.Log("Капкан захлопнулся");
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
                 Destroy(collision.gameObject);
             }
@@ -85,6 +91,7 @@ public class Sword : MonoBehaviour
             {
                 Debug.Log("От удара по голове граблями, ты теряешь меч");
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
             }
 
@@ -92,6 +99,7 @@ public class Sword : MonoBehaviour
             {
                 Debug.Log("Как с говном не бейся, тебе не победить");
                 _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
                 gameObject.SetActive(false);
             }
 
