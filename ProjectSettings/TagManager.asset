@@ -37,6 +37,9 @@ TagManager:
   - SequenceKeys0
   - SequenceKeys1
   - SequenceKeys2
+  - BlockNotSoGood
+  - Mimik
+  - Rest
   layers:
   - Default
   - TransparentFX

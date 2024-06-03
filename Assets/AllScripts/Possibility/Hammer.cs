@@ -105,6 +105,15 @@ public class Hammer : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
+            if (collision.gameObject.tag == "BlockNotSoGood")
+            {
+                Debug.Log("Блоку неочень хорошо");
+                Destroy(collision.transform.parent.gameObject);
+                hammerIsActive = false;
+                Player.GetComponent<MovePlayer>().ActiveHammer = hammerIsActive;
+                gameObject.SetActive(false);
+            }
+
         }
     }
 }

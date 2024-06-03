@@ -101,6 +101,24 @@ public class Key : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
+            if (collision.gameObject.tag == "Chest")
+            {
+                Debug.Log("Ты получаешь несметные богатсва");
+                Player.GetComponent<HealthPlayer>().SetHealth();
+                Player.GetComponent<Paper>().SetPaper();
+                keyIsActive = false;
+                Player.GetComponent<MovePlayer>().ActiveKey = keyIsActive;
+                gameObject.SetActive(false);
+            }
+
+            if (collision.gameObject.tag == "Mimik")
+            {
+                Debug.Log("Ты получаешь язык в жопу");
+                Player.GetComponent<HealthPlayer>().TakeHit();
+                keyIsActive = false;
+                Player.GetComponent<MovePlayer>().ActiveKey = keyIsActive;
+                gameObject.SetActive(false);
+            }
         }
     }
 }

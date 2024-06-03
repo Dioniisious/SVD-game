@@ -43,6 +43,7 @@ public class MovePlayer : MonoBehaviour
     public int count = 0;
     public Transform[] SequenceKeysToCreate;
     public GameObject Canvas;
+    public GameObject BackGroundForPush;
 
 
     private void Awake()
@@ -69,6 +70,7 @@ public class MovePlayer : MonoBehaviour
 
             if ((Input.GetKey(SequenceKeys[0])))
             {
+                AttackZone.SetActive(false);
                 isChoseTool = false;
                 StartCoroutine(FreezeFPS(0.3f));
                 SequenceKeysEnter.Add(SequenceKeys[0]);
@@ -81,7 +83,7 @@ public class MovePlayer : MonoBehaviour
 
             else if ((Input.GetKey(SequenceKeys[1])))
             {
-
+                AttackZone.SetActive(false);
                 isChoseTool = false;
                 StartCoroutine(FreezeFPS(0.3f));
                 SequenceKeysEnter.Add(SequenceKeys[1]);
@@ -96,6 +98,7 @@ public class MovePlayer : MonoBehaviour
 
             else if ((Input.GetKey(SequenceKeys[2])))
             {
+                AttackZone.SetActive(false);
                 isChoseTool = false;
                 StartCoroutine(FreezeFPS(0.3f));
                 SequenceKeysEnter.Add(SequenceKeys[2]);
@@ -114,6 +117,7 @@ public class MovePlayer : MonoBehaviour
                     {
                         Debug.Log("Успех!");
                         count = SequenceKeysEnter.Count;
+                        BackGroundForPush.SetActive(false);
                         SequenceKeysEnter.Clear();
                     }
 
@@ -141,6 +145,7 @@ public class MovePlayer : MonoBehaviour
                     AttackZone.SetActive(true);
                     isChoseTool = false;
                     toolInArm = null;
+                    ActiveTool = false;
 
 
                 }
@@ -154,6 +159,7 @@ public class MovePlayer : MonoBehaviour
                     AttackZone.SetActive(true);
                     toolInArm = null;
                     isChoseTool = false;
+                    ActiveTool = false;
                 }
 
                 if (Input.GetKey(KeyCode.Alpha3))
@@ -166,6 +172,7 @@ public class MovePlayer : MonoBehaviour
                         AttackZone.SetActive(true);
                     toolInArm = null;
                     isChoseTool = false;
+                    ActiveTool = false;
                 }
 
                 if (Input.GetKey(KeyCode.Alpha4))
@@ -178,6 +185,7 @@ public class MovePlayer : MonoBehaviour
                         AttackZone.SetActive(true);
                     toolInArm = null;
                     isChoseTool = false;
+                    ActiveTool = false;
                 }
                 if (Input.GetKey(KeyCode.Alpha5))
                 {
@@ -188,6 +196,7 @@ public class MovePlayer : MonoBehaviour
                     AttackZone.SetActive(true);
                     toolInArm = null;
                     isChoseTool = false;
+                    ActiveTool = false;
                 }
                 if (Input.GetKey(KeyCode.Alpha6))
                 {
@@ -198,6 +207,7 @@ public class MovePlayer : MonoBehaviour
                     Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
                     toolInArm = null;
                     isChoseTool = false;
+                    ActiveTool = false;
                 }
                 if (Input.GetKey(KeyCode.Alpha7))
                 {
@@ -208,6 +218,7 @@ public class MovePlayer : MonoBehaviour
                     Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
                     toolInArm = null;
                     isChoseTool = false;
+                    ActiveTool = false;
                 }
 
                 gameObject.GetComponent<Paper>().paperCount = CountPaper;
@@ -276,6 +287,7 @@ public class MovePlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
+            BackGroundForPush.SetActive(true);
             SequenceKeys = GenerateSequence(3);
             isChoseTool = true;
             inInteractionArea = true;
@@ -311,6 +323,7 @@ public class MovePlayer : MonoBehaviour
     {
         if (contàcted.gameObject.tag == "PosZone")
         {
+            DestroyArrowAll();
             isChoseTool = false;
             inInteractionArea = false;
             Debug.Log("Player left the zone!");
@@ -341,5 +354,23 @@ public class MovePlayer : MonoBehaviour
         return sequence;
     }
 
+    public void DestroyArrowAll()
+    {
+        GameObject[] DestroyArrow;
+
+        DestroyArrow = GameObject.FindGameObjectsWithTag("UpArrow");
+        foreach (GameObject obj in DestroyArrow)
+            Destroy(obj);
+        DestroyArrow = GameObject.FindGameObjectsWithTag("DownArrow");
+        foreach (GameObject obj in DestroyArrow)
+            Destroy(obj);
+        DestroyArrow = GameObject.FindGameObjectsWithTag("LeftArrow");
+        foreach (GameObject obj in DestroyArrow)
+            Destroy(obj);
+        DestroyArrow = GameObject.FindGameObjectsWithTag("RightArrow");
+        foreach (GameObject obj in DestroyArrow)
+            Destroy(obj);
+
+    }
 
 }

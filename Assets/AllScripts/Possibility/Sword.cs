@@ -103,6 +103,15 @@ public class Sword : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
+            if (collision.gameObject.tag == "Spikes")
+            {
+                Debug.Log("Пробьем себе путь вниз");
+                Destroy(collision.transform.parent.gameObject);
+                _swordActive = false;
+                Player.GetComponent<MovePlayer>().ActiveSword = _swordActive;
+                gameObject.SetActive(false);
+            }
+
         }
     }
 

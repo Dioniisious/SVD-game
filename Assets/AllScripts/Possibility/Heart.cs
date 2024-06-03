@@ -101,6 +101,15 @@ public class Heart : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
+            if (collision.gameObject.tag == "Rest")
+            {
+                Debug.Log("Ты отдохнул и восполнил здоровье");
+                Player.GetComponent<HealthPlayer>().SetHealth();
+                heartIsActive = false;
+                Player.GetComponent<MovePlayer>().ActiveHearth = heartIsActive;
+                gameObject.SetActive(false);
+            }
+
         }
     }
 }
