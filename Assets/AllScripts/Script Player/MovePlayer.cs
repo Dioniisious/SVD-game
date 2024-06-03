@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
@@ -27,24 +25,97 @@ public class MovePlayer : MonoBehaviour
     public bool ActiveKey = false;
     public bool shieldActive = false;
     public float AttackZoneDistanseX;
+    public bool ActiveTool = false;
     public float AttackZoneDistanseY;
     public float CountPaper;
+    public KeyCode[] validSequenceKeys = new[]
+    {
+    KeyCode.UpArrow,
+    KeyCode.RightArrow,
+    KeyCode.DownArrow,
+    KeyCode.LeftArrow
+    };
+    public KeyCode[] SequenceKeys;
+    public List<KeyCode> SequenceKeysEnter;
+    public int count = 0;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         toolInArm = null;
         freeze = false;
+        SequenceKeysEnter.Clear();
     }
 
     private void FixedUpdate()
     {
-        AttackZone.transform.position = new Vector3(transform.position.x + AttackZoneDistanseX, transform.position.y +AttackZoneDistanseY, 0);
+        AttackZone.transform.position = new Vector3(transform.position.x + AttackZoneDistanseX, transform.position.y + AttackZoneDistanseY, 0);
 
         if (freeze == false)
             _rb.velocity = transform.TransformDirection(new Vector2(1 * speed * Time.fixedDeltaTime, _rb.velocity.y + 0.0003f));
 
+
+
         if (isChoseTool == true)
+        {
+
+            //
+
+            if ((Input.GetKey(SequenceKeys[0])))
+            {
+                isChoseTool = false;
+                StartCoroutine(FreezeFPS(0.3f));
+                SequenceKeysEnter.Add(SequenceKeys[0]);
+                Debug.Log(SequenceKeys[0]);
+
+            }
+
+
+            //
+
+            else if ((Input.GetKey(SequenceKeys[1])))
+            {
+
+                isChoseTool = false;
+                StartCoroutine(FreezeFPS(0.3f));
+                SequenceKeysEnter.Add(SequenceKeys[1]);
+                Debug.Log(SequenceKeys[1]);
+
+            }
+
+
+            //
+
+            else if ((Input.GetKey(SequenceKeys[2])))
+            {
+                isChoseTool = false;
+                StartCoroutine(FreezeFPS(0.3f));
+                SequenceKeysEnter.Add(SequenceKeys[2]);
+                Debug.Log(SequenceKeys[2]);
+
+            }
+
+
+            if (SequenceKeysEnter.Count > 3)
+                SequenceKeysEnter.Clear();
+
+            if (SequenceKeysEnter.Count == 3)
+                for (int i = 0; i < SequenceKeysEnter.Count; i++)
+                    if (SequenceKeysEnter[i] == SequenceKeys[i])
+                    {
+                        Debug.Log("Успех!");
+                        count = SequenceKeysEnter.Count;
+                        SequenceKeysEnter.Clear();
+                    }
+
+            if (count == 3)
+            {
+                ActiveTool = true;
+                isChoseTool = false;
+                count = 0;
+            }
+        }
+        if (ActiveTool == true)
         {
             CountPaper = gameObject.GetComponent<Paper>().paperCount;
 
@@ -53,17 +124,16 @@ public class MovePlayer : MonoBehaviour
                 if (Input.GetKey(KeyCode.Alpha1))
                 {
                     Debug.Log("Hammer");
+                    CountPaper -= 2;
+
+                    ActiveHammer = true;
                     toolInArm = "Hammer";
                     ActiveHammer = true;
-                    CountPaper -= 2;
                     AttackZone.SetActive(true);
-                    //keyQuestResult = TryEnterKeyQuest();
-                    //if (keyQuestResult)
-                    //{
-                    //    toolInArm = "Hammer";
-                    //}
-                    toolInArm = null;
                     isChoseTool = false;
+                    toolInArm = null;
+
+
                 }
 
                 if (Input.GetKey(KeyCode.Alpha2))
@@ -73,11 +143,6 @@ public class MovePlayer : MonoBehaviour
                     ActiveKey = true;
                     CountPaper -= 1;
                     AttackZone.SetActive(true);
-                    //keyQuestResult = TryEnterKeyQuest();
-                    //if (keyQuestResult)
-                    //{
-                    //    toolInArm = "Key";
-                    //}
                     toolInArm = null;
                     isChoseTool = false;
                 }
@@ -85,11 +150,6 @@ public class MovePlayer : MonoBehaviour
                 if (Input.GetKey(KeyCode.Alpha3))
                 {
                     Debug.Log("Schield");
-                    //keyQuestResult = TryEnterKeyQuest();
-                    //if (keyQuestResult)
-                    //{
-                    //    toolInArm = "Schield";
-                    //}
                     toolInArm = "Shield";
                     shieldActive = true;
                     CountPaper -= 1;
@@ -107,12 +167,6 @@ public class MovePlayer : MonoBehaviour
                     CountPaper -= 1;
                     if (ActiveSword == true)
                         AttackZone.SetActive(true);
-
-                    // keyQuestResult = TryEnterKeyQuest();
-                    // if (keyQuestResult)
-                    // {
-                    //     toolInArm = "Sword";
-                    // }
                     toolInArm = null;
                     isChoseTool = false;
                 }
@@ -123,11 +177,6 @@ public class MovePlayer : MonoBehaviour
                     ActiveHearth = true;
                     CountPaper -= 2;
                     AttackZone.SetActive(true);
-                    // keyQuestResult = TryEnterKeyQuest();
-                    //if (keyQuestResult)
-                    //{
-                    //    toolInArm = "Hearth";
-                    //}
                     toolInArm = null;
                     isChoseTool = false;
                 }
@@ -138,10 +187,6 @@ public class MovePlayer : MonoBehaviour
                     CountPaper -= 2;
                     spawnPosition = ZoneObject.transform.GetChild(1).GetComponent<Transform>();
                     Instantiate(bridgeReal, spawnPosition.position, spawnPosition.rotation);
-                    //keyQuestResult = TryEnterKeyQuest();
-                    //if (keyQuestResult)
-                    //{
-                    //}
                     toolInArm = null;
                     isChoseTool = false;
                 }
@@ -152,10 +197,6 @@ public class MovePlayer : MonoBehaviour
                     CountPaper -= 1;
                     spawnPosition = ZoneObject.transform.GetChild(0).GetComponent<Transform>();
                     Instantiate(tramplineReal, spawnPosition.position, spawnPosition.rotation);
-                    //keyQuestResult = TryEnterKeyQuest();
-                    //if (keyQuestResult)
-                    //{
-                    //}
                     toolInArm = null;
                     isChoseTool = false;
                 }
@@ -163,7 +204,9 @@ public class MovePlayer : MonoBehaviour
                 gameObject.GetComponent<Paper>().paperCount = CountPaper;
             }
 
+
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -224,6 +267,7 @@ public class MovePlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
+            SequenceKeys = GenerateSequence(3);
             isChoseTool = true;
             inInteractionArea = true;
             ZoneObject = collision.gameObject;
@@ -239,6 +283,12 @@ public class MovePlayer : MonoBehaviour
         yield return new WaitForSeconds(second);
         freeze = false;
 
+    }
+
+    private IEnumerator FreezeFPS(float second)
+    {
+        yield return new WaitForSeconds(second);
+        isChoseTool = true;
     }
 
     private IEnumerator Invicible(float second)
@@ -264,16 +314,18 @@ public class MovePlayer : MonoBehaviour
         Instantiate(gameObject, SpawnPoint);
     }
 
-    public bool TryEnterKeyQuest()
+    public KeyCode[] GenerateSequence(int length = 3)
     {
-        isLucky = false;
+        KeyCode[] sequence = new KeyCode[length];
 
-        while (!isLucky && inInteractionArea)
+        for (int i = 0; i < length; i++)
         {
-            PlayerKeyChecker.correctAnswers = PlayerKeyChecker.GenerateRandomNums();
+            var key = validSequenceKeys[Random.Range(0, validSequenceKeys.Length)];
+            sequence[i] = key;
         }
 
-        return isLucky;
+        return sequence;
     }
+
 
 }
