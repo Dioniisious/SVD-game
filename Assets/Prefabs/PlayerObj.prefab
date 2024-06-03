@@ -282,7 +282,6 @@ GameObject:
   - component: {fileID: 1984636078949209017}
   - component: {fileID: 4511332400859384514}
   - component: {fileID: 7860756138338123471}
-  - component: {fileID: 3324786266591311202}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -299,8 +298,8 @@ Transform:
   m_GameObject: {fileID: 5525772628814628714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8, y: -0.14278966, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.5, y: -0.37, z: -1}
+  m_LocalScale: {x: 0.67612606, y: 0.67612606, z: 0.67612606}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2021005241451661015}
@@ -346,7 +345,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e4765842503743d4fa4d7780fa8c6589, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 405ee63e3e937c34f912b445d57b98fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -389,18 +388,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.023342133, y: -0.033346057}
+  m_Offset: {x: -0.023342133, y: 0.05107093}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.4, y: 2.3}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6865473, y: 0.9333079}
+  m_Size: {x: 0.6865473, y: 2.2417722}
   m_EdgeRadius: 0
 --- !u!50 &8349525825313646958
 Rigidbody2D:
@@ -441,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d054af60a875764bb0f930a857ea497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 120
+  speed: 70
   verticTramplineJump: 30
   horizTramplineJump: 50
   damageHJump: 30
@@ -466,12 +465,30 @@ MonoBehaviour:
   shieldActive: 0
   AttackZoneDistanseX: 0.7
   ActiveTool: 0
-  AttackZoneDistanseY: -0.2
+  AttackZoneDistanseY: -0.3
   CountPaper: 0
   validSequenceKeys: 11010000130100001201000014010000
+  pictureToTuch:
+  - {fileID: 2256682383754094231, guid: 793ff0faeea96914f919e8903a076755, type: 3}
+  - {fileID: 2830751367127123539, guid: dd5c6919a6030ad4e85006cc5eea52fd, type: 3}
+  - {fileID: 7370399651978315789, guid: be972e11012197c4f8bb75a9e4d8bc9f, type: 3}
+  - {fileID: 6149310837665179695, guid: 777bfe55144e2534797334c0e0d456a6, type: 3}
   SequenceKeys: 
   SequenceKeysEnter: 
   count: 0
+  SequenceKeysToCreate:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Canvas: {fileID: 0}
+  ActiveButton:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1984636078949209017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,17 +533,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b115890e30838704e9e35ec1a4efca18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3324786266591311202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5525772628814628714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d172caf9bb8d0649be17c8f470fab31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  _swordActive: 0

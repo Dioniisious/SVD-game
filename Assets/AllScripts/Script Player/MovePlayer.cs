@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class MovePlayer : MonoBehaviour
     public int count = 0;
     public Transform[] SequenceKeysToCreate;
     public GameObject Canvas;
-    public GameObject BackGroundForPush;
+    public GameObject[] ActiveButton;
 
 
     private void Awake()
@@ -56,6 +57,13 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (ActiveTool == false)
+            foreach (GameObject button in ActiveButton)
+            button.SetActive(true);
+        else
+            foreach(GameObject button in ActiveButton)
+            button.SetActive(false);
+
         AttackZone.transform.position = new Vector3(transform.position.x + AttackZoneDistanseX, transform.position.y + AttackZoneDistanseY, 0);
 
         if (freeze == false)
@@ -117,7 +125,6 @@ public class MovePlayer : MonoBehaviour
                     {
                         Debug.Log("Успех!");
                         count = SequenceKeysEnter.Count;
-                        BackGroundForPush.SetActive(false);
                         SequenceKeysEnter.Clear();
                     }
 
@@ -130,7 +137,8 @@ public class MovePlayer : MonoBehaviour
         }
         if (ActiveTool == true)
         {
-            CountPaper = gameObject.GetComponent<Paper>().paperCount;
+
+           CountPaper = gameObject.GetComponent<Paper>().paperCount;
 
             if (CountPaper > 0)
             {
@@ -287,7 +295,7 @@ public class MovePlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "PosZone" && toolInArm == null)
         {
-            BackGroundForPush.SetActive(true);
+
             SequenceKeys = GenerateSequence(3);
             isChoseTool = true;
             inInteractionArea = true;
@@ -326,6 +334,7 @@ public class MovePlayer : MonoBehaviour
             DestroyArrowAll();
             isChoseTool = false;
             inInteractionArea = false;
+            ActiveTool = false;
             Debug.Log("Player left the zone!");
         }
     }
