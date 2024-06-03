@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1462792920732452982}
   - component: {fileID: 404307711698375590}
   - component: {fileID: 2612334713173799259}
+  - component: {fileID: 2537428898907668646}
+  - component: {fileID: 8558910852627821122}
   m_Layer: 0
   m_Name: AttackZone
   m_TagString: Untagged
@@ -203,6 +205,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 5525772628814628714}
   heartIsActive: 0
+--- !u!114 &2537428898907668646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14125416482489996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21dd73a000cf3c841a61f64f8f275c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 5525772628814628714}
+  hammerIsActive: 0
+--- !u!114 &8558910852627821122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14125416482489996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8f817a2555130429beffdb4f129bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 5525772628814628714}
+  keyIsActive: 0
 --- !u!1 &4913066652450016092
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 5525772628814628714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.528389, y: -0.14278966, z: 0}
+  m_LocalPosition: {x: 8, y: -0.14278966, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -427,13 +457,21 @@ MonoBehaviour:
   toolInArm: 
   ZoneObject: {fileID: 0}
   AttackZone: {fileID: 14125416482489996}
-  bridgeReal: {fileID: 1038144497877035225, guid: 04c94a8c7f957e14dbbe2f17275c6b0f, type: 3}
-  tramplineReal: {fileID: 7032430563480911012, guid: ca9b87a7bd30e724fbcd2c31729b22c0, type: 3}
+  bridgeReal: {fileID: 3864955010270705795, guid: 8fc3871061401094abc113aaf119f99e, type: 3}
+  tramplineReal: {fileID: 2287704023338481643, guid: 9a0ff42331a1af546899cb6b4ee49597, type: 3}
   ActiveSword: 0
   ActiveHearth: 0
+  ActiveHammer: 0
+  ActiveKey: 0
   shieldActive: 0
   AttackZoneDistanseX: 0.7
+  ActiveTool: 0
+  AttackZoneDistanseY: -0.2
   CountPaper: 0
+  validSequenceKeys: 11010000130100001201000014010000
+  SequenceKeys: 
+  SequenceKeysEnter: 
+  count: 0
 --- !u!114 &1984636078949209017
 MonoBehaviour:
   m_ObjectHideFlags: 0

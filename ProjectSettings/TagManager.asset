@@ -30,6 +30,13 @@ TagManager:
   - HeartMenu
   - SpawnPoint
   - Bridge
+  - UpArrow
+  - DownArrow
+  - LeftArrow
+  - RightArrow
+  - SequenceKeys0
+  - SequenceKeys1
+  - SequenceKeys2
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -35,9 +36,14 @@ public class MovePlayer : MonoBehaviour
     KeyCode.DownArrow,
     KeyCode.LeftArrow
     };
+
+    public GameObject[] pictureToTuch;
     public KeyCode[] SequenceKeys;
     public List<KeyCode> SequenceKeysEnter;
     public int count = 0;
+    public Transform[] SequenceKeysToCreate;
+    public GameObject Canvas;
+
 
     private void Awake()
     {
@@ -67,7 +73,7 @@ public class MovePlayer : MonoBehaviour
                 StartCoroutine(FreezeFPS(0.3f));
                 SequenceKeysEnter.Add(SequenceKeys[0]);
                 Debug.Log(SequenceKeys[0]);
-
+                Destroy(GameObject.FindGameObjectWithTag(SequenceKeys[0].ToString()));
             }
 
 
@@ -80,6 +86,8 @@ public class MovePlayer : MonoBehaviour
                 StartCoroutine(FreezeFPS(0.3f));
                 SequenceKeysEnter.Add(SequenceKeys[1]);
                 Debug.Log(SequenceKeys[1]);
+                Destroy(GameObject.FindGameObjectWithTag(SequenceKeys[1].ToString()));
+
 
             }
 
@@ -92,6 +100,7 @@ public class MovePlayer : MonoBehaviour
                 StartCoroutine(FreezeFPS(0.3f));
                 SequenceKeysEnter.Add(SequenceKeys[2]);
                 Debug.Log(SequenceKeys[2]);
+                Destroy(GameObject.FindGameObjectWithTag(SequenceKeys[2].ToString()));
 
             }
 
@@ -271,7 +280,6 @@ public class MovePlayer : MonoBehaviour
             isChoseTool = true;
             inInteractionArea = true;
             ZoneObject = collision.gameObject;
-            //spawnPosition = collision.gameObject.transform.GetChild(0).GetComponent<Transform>();
             Debug.Log("Player entered the zone!" + isChoseTool);
         }
 
@@ -314,15 +322,21 @@ public class MovePlayer : MonoBehaviour
         Instantiate(gameObject, SpawnPoint);
     }
 
-    public KeyCode[] GenerateSequence(int length = 3)
+    public KeyCode[] GenerateSequence(int length)
     {
         KeyCode[] sequence = new KeyCode[length];
+        GameObject sequenceToTuch;
 
-        for (int i = 0; i < length; i++)
-        {
-            var key = validSequenceKeys[Random.Range(0, validSequenceKeys.Length)];
-            sequence[i] = key;
-        }
+        if (validSequenceKeys.Length > 0 && pictureToTuch.Length > 0)
+            for (int i = 0; i < length; i++)
+            {
+                int cool = Random.Range(0, validSequenceKeys.Length);
+                var key = validSequenceKeys[cool];
+                sequence[i] = key;
+                //sequenceToTuch = Instantiate(pictureToTuch[cool], SequenceKeysToCreate[i].GetComponent<Transform>().position, Quaternion.identity);
+                sequenceToTuch = Instantiate(pictureToTuch[cool], Canvas.transform);
+                sequenceToTuch.GetComponent<RectTransform>().position = SequenceKeysToCreate[i].GetComponent<RectTransform>().position;
+            }
 
         return sequence;
     }
